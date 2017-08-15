@@ -1,0 +1,31 @@
+最近使用Intellij idea（phpstorm、webstorm、pycharm、rubymine等类似）开发的时候，经常遇到内存被占满，导致异常卡顿，一开始总以为是自己程序内存泄露，后面发现即使不启动自己的项目，只是单纯的开发，依然会出现内存占满甚至溢出的情况。
+
+最后，实在受不了，在各大技术网站上搜罗相关文章，都说修改Intellij idea默认的vm配置文件即可增大使用内存，比如，将bin目录下的idea.exe.vmoptions文件内由
+-server
+-Xms128m
+-Xmx512m
+-XX:MaxPermSize=250m
+-XX:ReservedCodeCacheSize=150m
+-ea
+-Dsun.io.useCanonCaches=false
+-Djava.net.preferIPv4Stack=true
+-Djsse.enableSNIExtension=false
+-XX:+UseConcMarkSweepGC
+-XX:SoftRefLRUPolicyMSPerMB=50
+修改为
+-server
+-Xms128m
+-Xmx1024m
+-XX:MaxPermSize=250m
+-XX:ReservedCodeCacheSize=150m
+-ea
+-Dsun.io.useCanonCaches=false
+-Djava.net.preferIPv4Stack=true
+-Djsse.enableSNIExtension=false
+-XX:+UseConcMarkSweepGC
+-XX:SoftRefLRUPolicyMSPerMB=50
+当然，这需要你有足够多的内存，但是实际情况证明（如果你的系统是64bit的，在安装后bin目录下会有idea.exe和idea64.exe，而快捷方式默认指向idea.exe），如果修改了默认的512m，修改后第一次启动确实会生效，但是启动完毕之后就会自动替换为之前的配置，尝试了很多次（包括重装Intellij idea），都是一样的问题，最近无意间试了试启动64bit的idea64.exe，发现内存默认是750m，修改为更大的，再次启动，发现依然正常，不会替换还原为750m，尝试多次后决定把快捷方式指向idea64.exe，最终解决了我的问题。
+
+当然，长时间运行还是会越来越多内存占用，但至少开着Intellij idea一整天是不会出现内存溢出导致假死了。
+
+另外提一点就是，这里idea64.exe必须条件不仅仅是需要系统为64bit，你还得同时安装了64bit的jdk，这样才能正常使用，至于32bit的系统，遇到内存占满以及溢出的情况，就依然尝试修改上面提示内容即可（记得在公司好像是32bit的系统，也不经常出现内存占满），个人猜想，可能Intellij idea检测到系统为64bit，就建议安装64bit的jdk，然后使用64bit的Intellij idea引导来启动，但仅为猜测，由于英文水平有限，很多文章没有心情去细看，尚不清楚具体产生原因，或者Intellij idea效果本来就是如此，大家如果有了解到更深层级的原因及避免方案，还原指教。
