@@ -1,0 +1,20 @@
+1.col-sm-2
+col-sm-2指的是12栅格系统中在小屏幕下占两列， control-label则指的是控制标签
+(label)样式的一个类，一般用于控制表单控件里的样式
+例如这个代码：
+<form class="form-horizontal" role="form">
+    <div class="form-group">
+            <label for="password" class="col-sm-2 control-label">密码</label>
+            <div class="col-sm-10">
+                    <input type="password" class="form-control" id="pwd" 
+					placeholder="请输入你的密码“>
+            </div>
+    </div>
+</form>
+意思就是密码这两个字占两列，密码输入框占10列，一共占12列。如果不加
+control-label，这两个元素就总是对不齐。
+
+
+
+
+
