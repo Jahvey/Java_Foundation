@@ -1,0 +1,18 @@
+#wrap img{
+            width: 50px;
+            height: 60px;
+        }
+ #wrap th{
+            vertical-align:middle;
+            text-align: center;
+        }
+#wrap td{
+            vertical-align:middle;
+            text-align: center;
+        }
+        
+
+.button{
+		text-align: center;
+}
+
